@@ -1,50 +1,76 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
+using System.IO;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace ST10403075_PROG6212_POE_PART2
 {
     public partial class MainWindow : Window
     {
+        private string uploadedDocumentPath;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
+        // Calculate Claim Amount button click
+        private void CalculateClaimAmount_Click(object sender, RoutedEventArgs e)
+        {
+            if (decimal.TryParse(HoursWorkedTextBox.Text, out decimal hoursWorked) &&
+                decimal.TryParse(HourlyRateTextBox.Text, out decimal hourlyRate))
+            {
+                decimal claimAmount = hoursWorked * hourlyRate;
+                ClaimAmountTextBox.Text = claimAmount.ToString("F2");
+            }
+            else
+            {
+                MessageBox.Show("Please enter valid numbers for Hours Worked and Hourly Rate.");
+            }
+        }
+
+        // Upload PDF button click
+        private void UploadPDF_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "PDF files (*.pdf)|*.pdf",
+                Title = "Select Supporting Document"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
+                if (fileInfo.Length > 1 * 1024 * 1024)
+                {
+                    MessageBox.Show("File size exceeds 1MB limit. Please select a smaller file.");
+                }
+                else
+                {
+                    uploadedDocumentPath = openFileDialog.FileName;
+                    MessageBox.Show("PDF uploaded successfully.");
+                }
+            }
+        }
+
+        // Submit Claim button click
         private void SubmitClaim_Click(object sender, RoutedEventArgs e)
         {
-            // Collect data from input fields
-            string contractId = ContractID.Text;
-            double hoursWorked;
-            double hourlyRate;
-            bool isHoursValid = double.TryParse(HoursWorked.Text, out hoursWorked);
-            bool isRateValid = double.TryParse(HourlyRate.Text, out hourlyRate);
-            DateTime? claimDate = ClaimDate.SelectedDate;
+            string lecturerID = LecturerIDTextBox.Text;
+            string hoursWorked = HoursWorkedTextBox.Text;
+            string hourlyRate = HourlyRateTextBox.Text;
+            string claimAmount = ClaimAmountTextBox.Text;
+            DateTime? claimDate = ClaimDatePicker.SelectedDate;
 
-            if (string.IsNullOrEmpty(contractId) || !isHoursValid || !isRateValid || !claimDate.HasValue)
+            if (string.IsNullOrEmpty(lecturerID) || string.IsNullOrEmpty(hoursWorked) ||
+                string.IsNullOrEmpty(hourlyRate) || string.IsNullOrEmpty(claimAmount) || claimDate == null)
             {
-                MessageBox.Show("Please enter valid data for all fields.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please fill in all fields.");
                 return;
             }
 
-            // Calculate Claim Amount
-            double claimAmount = hoursWorked * hourlyRate;
-            ClaimAmount.Text = claimAmount.ToString("C");
-            ClaimStatus.Text = "Submitted";
-
-            // Logic to save the claim to the database can be added here
-            MessageBox.Show($"Claim for {contractId} has been submitted successfully.\nTotal Amount: {claimAmount:C}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void ResetForm_Click(object sender, RoutedEventArgs e)
-        {
-            // Clear all input fields
-            ContractID.Clear();
-            HoursWorked.Clear();
-            HourlyRate.Clear();
-            ClaimAmount.Clear();
-            ClaimDate.SelectedDate = null;
-            ClaimStatus.Text = "Pending";
+            // Database insertion logic here
+            MessageBox.Show("Claim submitted successfully!");
         }
     }
 }
