@@ -44,6 +44,11 @@ namespace ST10403075_PROG6212_POE_PART2
                     command.ExecuteNonQuery();
 
                     MessageBox.Show($"Sign-up successful! Your Lecturer ID is {lecturerID}");
+
+                    // Redirect to SignInMenu after successful sign-up
+                    SignInMenu signInWindow = new SignInMenu();
+                    signInWindow.Show();
+                    this.Close();
                 }
             }
             catch (Exception ex)
