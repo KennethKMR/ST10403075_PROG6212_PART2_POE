@@ -1,0 +1,50 @@
+﻿<Window x:Class="ST10403075_PROG6212_POE_PART2.MainWindow"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Contract Monthly Claim System" Height="500" Width="500"
+        WindowStartupLocation="CenterScreen" Background="#F7F7F7">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="ID:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Name="ContractID" Grid.Row="0" Grid.Column="1" Width="250" Margin="5" Padding="5"/>
+
+        <Label Content="Claim Amount:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Name="ClaimAmount" Grid.Row="1" Grid.Column="1" Width="250" Margin="5" Padding="5" IsReadOnly="True"/>
+
+        <Label Content="Date:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <DatePicker Name="ClaimDate" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+        <Label Content="Supporting Documents:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <Button Content="Upload Documents" Grid.Row="3" Grid.Column="1" Width="150" Margin="5"/>
+
+        <Label Content="Claim Status:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Name="ClaimStatus" Grid.Row="4" Grid.Column="1" Width="250" Margin="5" Padding="5" IsReadOnly="True" Text="Pending"/>
+
+        <Label Content="Hours Worked:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Name="HoursWorked" Grid.Row="5" Grid.Column="1" Width="250" Margin="5" Padding="5"/>
+
+        <Label Content="Hourly Rate:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox Name="HourlyRate" Grid.Row="6" Grid.Column="1" Width="250" Margin="5" Padding="5"/>
+
+        <StackPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Submit Claim" Width="120" Margin="10" Padding="5" Click="SubmitClaim_Click"/>
+            <Button Content="Reset" Width="120" Margin="10" Padding="5" Click="ResetForm_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
