@@ -1,76 +1,97 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.IO;
 using System.Windows;
-using Microsoft.Win32;
 
 namespace ST10403075_PROG6212_POE_PART2
 {
     public partial class MainWindow : Window
     {
-        private string uploadedDocumentPath;
+        private byte[] pdfData; // To store the uploaded PDF
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        // Calculate Claim Amount button click
         private void CalculateClaimAmount_Click(object sender, RoutedEventArgs e)
         {
             if (decimal.TryParse(HoursWorkedTextBox.Text, out decimal hoursWorked) &&
                 decimal.TryParse(HourlyRateTextBox.Text, out decimal hourlyRate))
             {
                 decimal claimAmount = hoursWorked * hourlyRate;
-                ClaimAmountTextBox.Text = claimAmount.ToString("F2");
+                ClaimAmountTextBox.Text = claimAmount.ToString("F2"); // Format to two decimal places
             }
             else
             {
-                MessageBox.Show("Please enter valid numbers for Hours Worked and Hourly Rate.");
+                MessageBox.Show("Please enter valid numbers for hours worked and hourly rate.");
             }
         }
 
-        // Upload PDF button click
         private void UploadPDF_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
-                Filter = "PDF files (*.pdf)|*.pdf",
-                Title = "Select Supporting Document"
+                Filter = "PDF Files (*.pdf)|*.pdf"
             };
 
             if (openFileDialog.ShowDialog() == true)
             {
                 FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
-                if (fileInfo.Length > 1 * 1024 * 1024)
+                if (fileInfo.Length <= 1048576) // 1 MB limit
                 {
-                    MessageBox.Show("File size exceeds 1MB limit. Please select a smaller file.");
+                    pdfData = File.ReadAllBytes(openFileDialog.FileName);
                 }
                 else
                 {
-                    uploadedDocumentPath = openFileDialog.FileName;
-                    MessageBox.Show("PDF uploaded successfully.");
+                    MessageBox.Show("File is too large. Please upload a PDF no larger than 1 MB.");
                 }
             }
         }
 
-        // Submit Claim button click
         private void SubmitClaim_Click(object sender, RoutedEventArgs e)
         {
-            string lecturerID = LecturerIDTextBox.Text;
-            string hoursWorked = HoursWorkedTextBox.Text;
-            string hourlyRate = HourlyRateTextBox.Text;
-            string claimAmount = ClaimAmountTextBox.Text;
-            DateTime? claimDate = ClaimDatePicker.SelectedDate;
+            string connectionString = "Server=labG9AEB3\\SQLEXPRESS;Database=ST10403075_PROG6212_PART2_POE;Trusted_Connection=True;";
 
-            if (string.IsNullOrEmpty(lecturerID) || string.IsNullOrEmpty(hoursWorked) ||
-                string.IsNullOrEmpty(hourlyRate) || string.IsNullOrEmpty(claimAmount) || claimDate == null)
+            if (decimal.TryParse(HoursWorkedTextBox.Text, out decimal hoursWorked) &&
+                decimal.TryParse(HourlyRateTextBox.Text, out decimal hourlyRate) &&
+                DateTime.TryParse(SubmittedDatePicker.Text, out DateTime submittedDate))
             {
-                MessageBox.Show("Please fill in all fields.");
-                return;
-            }
+                decimal claimAmount = hoursWorked * hourlyRate;
 
-            // Database insertion logic here
-            MessageBox.Show("Claim submitted successfully!");
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+                        string query = @"
+                            INSERT INTO Claims (submittedDate, claimAmount, hourlyRate, hoursWorked, supportingDocument, lecturerID)
+                            VALUES (@submittedDate, @claimAmount, @hourlyRate, @hoursWorked, @supportingDocument, @lecturerID)";
+
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@submittedDate", submittedDate);
+                            command.Parameters.AddWithValue("@claimAmount", claimAmount);
+                            command.Parameters.AddWithValue("@hourlyRate", hourlyRate);
+                            command.Parameters.AddWithValue("@hoursWorked", hoursWorked);
+                            command.Parameters.AddWithValue("@supportingDocument", pdfData ?? (object)DBNull.Value);
+                            command.Parameters.AddWithValue("@lecturerID", IDTextBox.Text); // User-provided lecturer ID
+
+                            command.ExecuteNonQuery();
+                        }
+
+                        MessageBox.Show("Claim submitted successfully.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter valid data.");
+            }
         }
     }
 }

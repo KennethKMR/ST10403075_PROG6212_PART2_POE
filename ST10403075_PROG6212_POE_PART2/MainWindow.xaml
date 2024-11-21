@@ -1,47 +1,35 @@
 ﻿<Window x:Class="ST10403075_PROG6212_POE_PART2.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        Title="MainWindow" Height="400" Width="600">
+    <Grid>
+        <!-- Lecturer ID Field -->
+        <Label Content="Lecturer ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0"/>
+        <TextBox x:Name="IDTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,20,0,0" Width="200"/>
 
-        <!-- Lecturer ID -->
-        <Label Content="Lecturer ID:" Grid.Row="0" VerticalAlignment="Center"/>
-        <TextBox x:Name="LecturerIDTextBox" Grid.Row="0" Width="200" Margin="150,5,0,5"/>
+        <!-- Date of Claim Field -->
+        <Label Content="Date of Claim:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,60,0,0"/>
+        <DatePicker x:Name="SubmittedDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,60,0,0" Width="200"/>
 
-        <!-- Hours Worked -->
-        <Label Content="Hours Worked:" Grid.Row="1" VerticalAlignment="Center"/>
-        <TextBox x:Name="HoursWorkedTextBox" Grid.Row="1" Width="200" Margin="150,5,0,5"/>
+        <!-- Hours Worked Field -->
+        <Label Content="Hours Worked:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,100,0,0"/>
+        <TextBox x:Name="HoursWorkedTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,100,0,0" Width="200"/>
 
-        <!-- Hourly Rate -->
-        <Label Content="Hourly Rate:" Grid.Row="2" VerticalAlignment="Center"/>
-        <TextBox x:Name="HourlyRateTextBox" Grid.Row="2" Width="200" Margin="150,5,0,5"/>
+        <!-- Hourly Rate Field -->
+        <Label Content="Hourly Rate:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,140,0,0"/>
+        <TextBox x:Name="HourlyRateTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,140,0,0" Width="200"/>
 
-        <!-- Claim Amount (Read Only) -->
-        <Label Content="Claim Amount:" Grid.Row="3" VerticalAlignment="Center"/>
-        <TextBox x:Name="ClaimAmountTextBox" Grid.Row="3" Width="200" Margin="150,5,0,5" IsReadOnly="True"/>
+        <!-- Claim Amount Field (Read-only) -->
+        <Label Content="Claim Amount:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,180,0,0"/>
+        <TextBox x:Name="ClaimAmountTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,180,0,0" Width="200" IsReadOnly="True"/>
 
         <!-- Calculate Claim Amount Button -->
-        <Button Content="Calculate Claim Amount" Grid.Row="4" Width="150" Margin="150,5,0,5" Click="CalculateClaimAmount_Click"/>
+        <Button Content="Calculate Claim Amount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,220,0,0" Width="150" Click="CalculateClaimAmount_Click"/>
 
-        <!-- Date Selection -->
-        <Label Content="Select Date:" Grid.Row="5" VerticalAlignment="Center"/>
-        <DatePicker x:Name="ClaimDatePicker" Grid.Row="5" Width="200" Margin="150,5,0,5"/>
+        <!-- Upload Supporting Document Button -->
+        <Button Content="Upload Supporting Document" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,260,0,0" Width="150" Click="UploadPDF_Click"/>
 
-        <!-- Supporting Documents -->
-        <Label Content="Supporting Documents (PDF 1MB max):" Grid.Row="6" VerticalAlignment="Center"/>
-        <Button Content="Upload PDF" Grid.Row="6" Width="100" Margin="150,5,0,5" Click="UploadPDF_Click"/>
-
-        <!-- Submit Button -->
-        <Button Content="Submit Claim" Grid.Row="7" Width="150" HorizontalAlignment="Left" Margin="0,10,0,0" Click="SubmitClaim_Click"/>
+        <!-- Submit Claim Button -->
+        <Button Content="Submit Claim" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,300,0,0" Width="150" Click="SubmitClaim_Click"/>
     </Grid>
 </Window>
