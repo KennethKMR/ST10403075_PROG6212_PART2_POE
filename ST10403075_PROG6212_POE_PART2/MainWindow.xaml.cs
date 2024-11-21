@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ST10403075_PROG6212_POE_PART2
 {
@@ -14,7 +15,17 @@ namespace ST10403075_PROG6212_POE_PART2
             InitializeComponent();
         }
 
-        private void CalculateClaimAmount_Click(object sender, RoutedEventArgs e)
+        private void HoursWorkedTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalculateAndDisplayClaimAmount();
+        }
+
+        private void HourlyRateTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalculateAndDisplayClaimAmount();
+        }
+
+        private void CalculateAndDisplayClaimAmount()
         {
             if (decimal.TryParse(HoursWorkedTextBox.Text, out decimal hoursWorked) &&
                 decimal.TryParse(HourlyRateTextBox.Text, out decimal hourlyRate))
@@ -24,7 +35,7 @@ namespace ST10403075_PROG6212_POE_PART2
             }
             else
             {
-                MessageBox.Show("Please enter valid numbers for hours worked and hourly rate.");
+                ClaimAmountTextBox.Text = string.Empty; // Clear the field if input is invalid
             }
         }
 

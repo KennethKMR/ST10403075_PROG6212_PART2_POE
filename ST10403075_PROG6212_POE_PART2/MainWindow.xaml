@@ -11,20 +11,17 @@
         <Label Content="Date of Claim:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,60,0,0"/>
         <DatePicker x:Name="SubmittedDatePicker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,60,0,0" Width="200"/>
 
-        <!-- Hours Worked Field -->
         <Label Content="Hours Worked:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,100,0,0"/>
-        <TextBox x:Name="HoursWorkedTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,100,0,0" Width="200"/>
+        <TextBox x:Name="HoursWorkedTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,100,0,0" Width="200" TextChanged="HoursWorkedTextBox_TextChanged"/>
 
         <!-- Hourly Rate Field -->
         <Label Content="Hourly Rate:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,140,0,0"/>
-        <TextBox x:Name="HourlyRateTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,140,0,0" Width="200"/>
+        <TextBox x:Name="HourlyRateTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,140,0,0" Width="200" TextChanged="HourlyRateTextBox_TextChanged"/>
 
         <!-- Claim Amount Field (Read-only) -->
         <Label Content="Claim Amount:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,180,0,0"/>
         <TextBox x:Name="ClaimAmountTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="120,180,0,0" Width="200" IsReadOnly="True"/>
 
-        <!-- Calculate Claim Amount Button -->
-        <Button Content="Calculate Claim Amount" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,220,0,0" Width="150" Click="CalculateClaimAmount_Click"/>
 
         <!-- Upload Supporting Document Button -->
         <Button Content="Upload Supporting Document" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,260,0,0" Width="150" Click="UploadPDF_Click"/>
