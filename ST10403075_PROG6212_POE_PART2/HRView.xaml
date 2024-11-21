@@ -1,0 +1,38 @@
+﻿<Window x:Class="ST10403075_PROG6212_POE_PART2.HRView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ST10403075_PROG6212_POE_PART2"
+        mc:Ignorable="d"
+        Title="HRView" Height="450" Width="800">
+    <Grid>
+        <Grid>
+            <TabControl>
+                <!-- Tab for Claims Report Generation -->
+                <TabItem Header="Generate Claim Reports">
+                    <StackPanel>
+                        <TextBlock Text="Generate Reports for Approved Claims" FontSize="18" FontWeight="Bold" Margin="10" />
+                        <Button Content="Generate Claims Report" Width="200" Height="40" Click="GenerateReport_Click" Margin="10"/>
+                    </StackPanel>
+                </TabItem>
+
+                <!-- Tab for Lecturer Data Management -->
+                <TabItem Header="Manage Lecturer Data">
+                    <StackPanel>
+                        <TextBlock Text="Update Information" FontSize="18" FontWeight="Bold" Margin="10"/>
+
+                        <!-- Editable Lecturer Information -->
+                        <TextBlock Text="Name:" VerticalAlignment="Center"/>
+                        <TextBox Name="txtFirstName" Margin="30,0"/>
+
+                        <Label Content="Lecturer ID:" VerticalAlignment="Center"/>
+                        <TextBox x:Name="IDTextBox" Margin="30,0"/>
+
+                        <Button Content="Update Information" Width="200" Height="40" Click="UpdateLecturer_Click" Margin="10"/>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>

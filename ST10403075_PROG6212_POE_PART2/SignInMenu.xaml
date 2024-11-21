@@ -29,5 +29,8 @@
         <TextBlock Grid.Row="4" HorizontalAlignment="Center" Margin="0,15,0,0">
             <Hyperlink Click="NeedAccount_Click">Need an account?</Hyperlink>
         </TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,43,0,0" Grid.Row="4">
+            <Hyperlink Click="Hyperlink_Click">Go to HR View</Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>

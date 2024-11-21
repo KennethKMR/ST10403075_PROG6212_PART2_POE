@@ -88,5 +88,16 @@ namespace ST10403075_PROG6212_POE_PART2
             signUpWindow.Show();
             this.Close(); // Close the SignInMenu window
         }
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            // Create an instance of the HRView window
+            HRView hrViewWindow = new HRView();
+
+            // Show the HRView window
+            hrViewWindow.Show();
+
+            // Optionally, close the current window
+            this.Close();
+        }
     }
 }
